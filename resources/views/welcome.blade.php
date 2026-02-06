@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Laravel</title>
+    <title>Fiorenzo | Luxury Fashion</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -46,11 +46,16 @@
         @endif
 
         <div class="max-w-7xl mx-auto p-6 lg:p-8">
-            <div class="flex justify-center">
-                <h1 class="text-4xl font-bold text-gray-900">Laravel</h1>
+            <div class="flex justify-center flex-col items-center">
+                <h1 class="text-6xl font-serif tracking-widest uppercase mb-4"
+                    style="font-family: 'Cormorant Garamond', serif;">FIORENZO</h1>
+                <p class="text-sm tracking-widest text-gray-400 uppercase">Luxury Fashion & Accessories</p>
             </div>
-            <div class="mt-8 text-center">
-                <p class="text-gray-500">Welcome to your Laravel 12 application.</p>
+            <div class="mt-12 text-center">
+                <a href="{{ route('shop.index') }}"
+                    class="px-8 py-3 bg-black text-white text-xs uppercase tracking-widest hover:bg-gray-800 transition-colors">
+                    Enter the Shop
+                </a>
             </div>
         </div>
     </div>
