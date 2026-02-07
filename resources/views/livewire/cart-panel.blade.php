@@ -41,7 +41,7 @@
                                             {{ number_format($item->product->price) }}
                                         </p>
                                     </div>
-                                    <button wire:click="remove({{ $item->id }})"
+                                    <button type="button" wire:click="remove({{ $item->id }})" wire:loading.attr="disabled"
                                         class="text-[10px] uppercase tracking-widest text-gray-400 hover:text-black hover:underline transition-colors"
                                         aria-label="Remove">
                                         Remove

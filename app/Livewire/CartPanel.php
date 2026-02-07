@@ -40,6 +40,7 @@ class CartPanel extends Component
     public function updateQuantity($id, $quantity)
     {
         $item = CartItem::where('user_id', Auth::id())->where('id', $id)->first();
+
         if ($item) {
             $quantity = (int) $quantity;
             if ($quantity > 0) {
@@ -48,16 +49,21 @@ class CartPanel extends Component
             } else {
                 $item->delete();
             }
-            $this->dispatch('cart-updated');
+            // Recalculate immediately
             $this->loadCart();
+            $this->dispatch('cart-updated');
         }
     }
 
     public function remove($id)
     {
-        CartItem::where('user_id', Auth::id())->where('id', $id)->delete();
-        $this->dispatch('cart-updated');
-        $this->loadCart();
+        $item = CartItem::where('user_id', Auth::id())->where('id', $id)->first();
+
+        if ($item) {
+            $item->delete();
+            $this->loadCart();
+            $this->dispatch('cart-updated');
+        }
     }
 
     public function render()
