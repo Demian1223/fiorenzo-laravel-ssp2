@@ -14,6 +14,7 @@ Route::get('/women', [ShopController::class, 'women'])->name('shop.women');
 Route::get('/men', [ShopController::class, 'men'])->name('shop.men');
 
 Route::get('/products/{product:slug}', [ShopController::class, 'show'])->name('products.show');
+Route::get('/checkout-debug', [App\Http\Controllers\CheckoutController::class, 'create'])->name('checkout.debug');
 
 // Cart & Orders
 use App\Http\Controllers\CartController;
