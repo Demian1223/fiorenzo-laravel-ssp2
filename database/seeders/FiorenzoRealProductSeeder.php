@@ -84,8 +84,11 @@ class FiorenzoRealProductSeeder extends Seeder
             $name .= ' Piece ' . $id;
         }
 
+        // Stable slug using gender and filename
+        $slug = Str::slug($gender . '-' . str_replace(['.png', '.jpg', '.jpeg', '.webp'], '', $filename));
+
         Product::updateOrCreate(
-            ['slug' => Str::slug($name . '-' . $gender . '-' . ($id ?: uniqid()))],
+            ['slug' => $slug],
             [
                 'name' => $name,
                 'category_id' => $cats[$type] ?? $cats['accessories'],
