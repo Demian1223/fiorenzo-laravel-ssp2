@@ -14,6 +14,14 @@ Route::get('/women', [ShopController::class, 'women'])->name('shop.women');
 Route::get('/men', [ShopController::class, 'men'])->name('shop.men');
 
 Route::get('/products/{product:slug}', [ShopController::class, 'show'])->name('products.show');
+Route::get('/check-stripe', function () {
+    return [
+        'config_set' => filled(config('services.stripe.secret')),
+        'env_set' => filled(env('STRIPE_SECRET')),
+        'config_prefix' => substr(config('services.stripe.secret'), 0, 7),
+        'env_prefix' => substr(env('STRIPE_SECRET'), 0, 7),
+    ];
+});
 Route::get('/checkout-debug', [App\Http\Controllers\CheckoutController::class, 'create'])->name('checkout.debug');
 
 // Cart & Orders
