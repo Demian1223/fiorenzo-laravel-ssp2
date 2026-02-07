@@ -1,9 +1,9 @@
 import './bootstrap';
 
-import Alpine from 'alpinejs';
+import './bootstrap';
+
 import intersect from '@alpinejs/intersect'
 
-window.Alpine = Alpine;
-Alpine.plugin(intersect)
-
-Alpine.start();
+document.addEventListener('alpine:init', () => {
+    Alpine.plugin(intersect)
+})
