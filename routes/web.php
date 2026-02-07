@@ -41,7 +41,7 @@ Route::get('/contact', function () {
 
 // Cart & Orders (Protected)
 Route::middleware([
-    'auth:sanctum',
+    'auth',
     config('jetstream.auth_session'),
 ])->group(function () {
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');

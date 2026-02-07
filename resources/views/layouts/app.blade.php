@@ -46,6 +46,39 @@
 
     <!-- Main Content -->
     <main>
+        <!-- Flash Messages -->
+        @if (session('error'))
+            <div class="fixed top-24 left-1/2 -translate-x-1/2 z-[60] w-full max-w-md px-4">
+                <div class="bg-red-50 border border-red-200 text-red-700 px-6 py-4 rounded-none shadow-xl flex justify-between items-center animate-fade-in-down"
+                    role="alert">
+                    <span class="text-sm font-medium">{{ session('error') }}</span>
+                    <button type="button" onclick="this.parentElement.parentElement.remove()"
+                        class="text-red-900/50 hover:text-red-900">
+                        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        @endif
+
+        @if (session('success'))
+            <div class="fixed top-24 left-1/2 -translate-x-1/2 z-[60] w-full max-w-md px-4">
+                <div class="bg-green-50 border border-green-200 text-green-700 px-6 py-4 rounded-none shadow-xl flex justify-between items-center animate-fade-in-down"
+                    role="alert">
+                    <span class="text-sm font-medium">{{ session('success') }}</span>
+                    <button type="button" onclick="this.parentElement.parentElement.remove()"
+                        class="text-green-900/50 hover:text-green-900">
+                        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        @endif
+
         {{ $slot }}
     </main>
 
