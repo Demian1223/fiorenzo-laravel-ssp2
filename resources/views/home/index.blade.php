@@ -68,6 +68,63 @@
         </section>
 
 
+        <!-- Signature Styles (Latest Products) -->
+        <section class="w-full bg-white py-24 px-6 lg:px-12 border-b border-gray-50" x-data="{ shown: false }"
+            x-intersect.once="shown = true">
+            <div class="max-w-[1440px] mx-auto">
+                <div class="flex flex-col items-center mb-16 text-center">
+                    <p class="text-[10px] tracking-[0.4em] text-[#8b0000] uppercase mb-4 opacity-0 transform translate-y-4 transition-all duration-700 delay-100"
+                        :class="shown ? 'opacity-100 translate-y-0' : ''">Selected Pieces</p>
+                    <h2 class="text-4xl lg:text-5xl font-light tracking-[0.2em] uppercase opacity-0 transform translate-y-4 transition-all duration-700 delay-200"
+                        :class="shown ? 'opacity-100 translate-y-0' : ''"
+                        style="font-family: 'Cormorant Garamond', serif;">Signature Styles</h2>
+                </div>
+
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+                    @foreach($products as $index => $product)
+                        <div class="flex flex-col items-center group cursor-pointer opacity-0 transform translate-y-8 transition-all duration-1000"
+                            :class="shown ? 'opacity-100 translate-y-0' : ''"
+                            style="transition-delay: {{ 300 + ($index * 150) }}ms">
+
+                            <div class="relative overflow-hidden w-full aspect-[3/4] bg-gray-50 mb-6">
+                                <a href="{{ route('products.show', $product->slug) }}" class="block w-full h-full">
+                                    <img src="{{ !empty($product->image_url) ? (Str::startsWith($product->image_url, ['http', 'https']) ? $product->image_url : asset($product->image_url)) : 'https://placehold.co/800x1066' }}"
+                                        alt="{{ $product->name }}"
+                                        class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105">
+                                </a>
+                                <div
+                                    class="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                                </div>
+                            </div>
+
+                            <div class="text-center">
+                                <p class="text-[11px] tracking-[0.3em] text-gray-400 uppercase mb-2">
+                                    {{ $product->brand->name ?? 'FIORENZO' }}</p>
+                                <h3 class="text-[16px] font-light tracking-wide group-hover:italic transition-all duration-300"
+                                    style="font-family: 'Cormorant Garamond', serif;">
+                                    <a href="{{ route('products.show', $product->slug) }}">{{ $product->name }}</a>
+                                </h3>
+                                <p class="text-[13px] tracking-widest text-[#8b0000] mt-2 italic font-medium">LKR
+                                    {{ number_format($product->price, 0) }}</p>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+
+                <div class="mt-20 flex justify-center opacity-0 transform translate-y-4 transition-all duration-700 delay-1000"
+                    :class="shown ? 'opacity-100 translate-y-0' : ''">
+                    <a href="{{ route('shop.men') }}"
+                        class="px-12 py-4 border border-black/10 text-[10px] tracking-[0.4em] font-medium hover:bg-black hover:text-white transition-all duration-500 uppercase">
+                        View More Men's
+                    </a>
+                    <a href="{{ route('shop.women') }}"
+                        class="ml-4 px-12 py-4 border border-black/10 text-[10px] tracking-[0.4em] font-medium hover:bg-black hover:text-white transition-all duration-500 uppercase">
+                        View More Women's
+                    </a>
+                </div>
+            </div>
+        </section>
+
         <!-- Brand Story (Replaced with Curated Grid Design) -->
         <section
             class="w-full bg-white py-32 md:py-48 lg:py-64 selection:bg-black selection:text-white font-['Cormorant_Garamond']"

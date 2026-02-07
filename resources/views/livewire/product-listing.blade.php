@@ -8,7 +8,7 @@
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                     <circle cx="11" cy="11" r="8"></circle>
-                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    <line x1="21" x2="16.65" y2="16.65"></line>
                 </svg>
             </div>
         </div>
@@ -25,7 +25,7 @@
     <!-- Product Grid -->
     <div class="grid grid-cols-2 sm:grid-cols-4 gap-x-4 md:gap-x-6 gap-y-12 md:gap-y-16">
         @foreach($products as $product)
-            <div class="group cursor-pointer flex flex-col">
+            <div class="group cursor-pointer flex flex-col" wire:key="product-{{ $product->id }}">
                 <!-- Image Container -->
                 <div class="relative w-full aspect-[3/4] overflow-hidden bg-[#F5F5F5] mb-5">
                     <a href="{{ route('products.show', $product->slug) }}" class="block w-full h-full">

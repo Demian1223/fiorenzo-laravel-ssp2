@@ -18,8 +18,13 @@ class FiorenzoRealProductSeeder extends Seeder
             $fiorenzo = Brand::create(['name' => 'FIORENZO', 'slug' => 'fiorenzo']);
         }
 
-        $menCategory = Category::where('slug', 'men')->first();
-        $womenCategory = Category::where('slug', 'women')->first();
+        // Fetch precise categories
+        $cats = [
+            'readytowear' => Category::where('slug', 'ready-to-wear')->first()->id,
+            'bag' => Category::where('slug', 'bags')->first()->id,
+            'shoes' => Category::where('slug', 'shoes')->first()->id,
+            'accessories' => Category::where('slug', 'accessories')->first()->id,
+        ];
 
         // --- SEED MEN ---
         $menPath = public_path('images/MEN');
@@ -30,7 +35,7 @@ class FiorenzoRealProductSeeder extends Seeder
                 if (!in_array($file->getExtension(), ['png', 'jpg', 'jpeg', 'webp']))
                     continue;
 
-                $this->createProduct($filename, 'men', $menCategory->id, $fiorenzo->id, 'images/MEN/');
+                $this->createProduct($filename, 'men', $fiorenzo->id, 'images/MEN/', $cats);
             }
         }
 
@@ -43,50 +48,51 @@ class FiorenzoRealProductSeeder extends Seeder
                 if (!in_array($file->getExtension(), ['png', 'jpg', 'jpeg', 'webp']))
                     continue;
 
-                $this->createProduct($filename, 'women', $womenCategory->id, $fiorenzo->id, 'images/WOMEN/');
+                $this->createProduct($filename, 'women', $fiorenzo->id, 'images/WOMEN/', $cats);
             }
         }
     }
 
-    private function createProduct($filename, $gender, $categoryId, $brandId, $folder)
+    private function createProduct($filename, $gender, $brandId, $folder, $cats)
     {
-        // Guess category (string) from filename
         $lowerName = strtolower($filename);
         $type = 'accessories';
-        $price = 85000;
 
-        if (str_contains($lowerName, 'readytowear')) {
+        $price = 85000;
+        $adjective = ['Elegant', 'Exclusive', 'Signature', 'Premium', 'Modern', 'Classic', 'Luxury'][rand(0, 6)];
+
+        if (str_contains($lowerName, 'readytowear') || str_contains($lowerName, 'readwaytowear')) {
             $type = 'readytowear';
-            $price = rand(220000, 480000);
+            $price = rand(185, 350) * 1000;
+            $name = $adjective . ' Ready-To-Wear';
         } elseif (str_contains($lowerName, 'shoes')) {
             $type = 'shoes';
-            $price = rand(110000, 290000);
-        } elseif (str_contains($lowerName, 'bag')) {
+            $price = rand(125, 240) * 1000;
+            $name = $adjective . ' Leather Loafers';
+        } elseif (str_contains($lowerName, 'bag') || str_contains($lowerName, 'handbag')) {
             $type = 'bag';
-            $price = rand(380000, 950000);
-        } elseif (str_contains($lowerName, 'handbag')) {
-            $type = 'handbag';
-            $price = rand(420000, 1100000);
+            $price = rand(450, 950) * 1000;
+            $name = $adjective . ' Evening Bag';
         } else {
-            $price = rand(45000, 160000);
+            $type = 'accessories';
+            $price = rand(45, 120) * 1000;
+            $name = $adjective . ' Accessory';
         }
 
-        // Generate a clean name
-        // e.g. "ReadyToWearMen1.png" -> "Fiorenzo Ready-To-Wear 1"
-        $cleanName = str_replace([$gender, '.png', '.jpg', '.jpeg', '.webp'], '', $filename);
-        $cleanName = preg_replace('/(?<!^)([A-Z])/', ' $1', $cleanName); // Space before capitals
-        $cleanName = trim($cleanName);
-        $cleanName = "Fiorenzo " . $cleanName;
+        $id = preg_replace('/[^0-9]/', '', $filename);
+        if ($id) {
+            $name .= ' Piece ' . $id;
+        }
 
         Product::updateOrCreate(
-            ['slug' => Str::slug($cleanName . '-' . $gender)],
+            ['slug' => Str::slug($name . '-' . $gender . '-' . ($id ?: uniqid()))],
             [
-                'name' => $cleanName,
-                'category_id' => $categoryId,
+                'name' => $name,
+                'category_id' => $cats[$type] ?? $cats['accessories'],
                 'brand_id' => $brandId,
                 'price' => $price,
-                'stock' => rand(5, 15),
-                'description' => "Exquisite luxury piece from the Fiorenzo $gender collection. Crafted with the finest materials and attention to detail.",
+                'stock' => rand(2, 8),
+                'description' => "An exceptional $name from our $gender collection. FIORENZO brings you the pinnacle of fashion, blending traditional craftsmanship with contemporary design.",
                 'image_url' => $folder . $filename,
                 'gender' => $gender,
                 'category' => $type

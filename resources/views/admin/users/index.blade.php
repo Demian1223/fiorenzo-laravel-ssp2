@@ -1,4 +1,4 @@
-1<x-app-layout>
+<x-app-layout>
     <x-admin-hero title="Users Management" image="Manage_Accounts.jpg" />
 
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mt-8 text-right">

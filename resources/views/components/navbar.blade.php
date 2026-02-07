@@ -17,12 +17,8 @@
         <!-- Top Row: Logo & Icons (Absolute Centering) -->
         <div class="relative flex justify-between items-center w-full mb-8 min-h-[48px]">
             
-            <!-- Left: Search -->
-            <div class="flex items-center z-10">
-               <div class="hidden md:block">
-                   <livewire:navbar-search />
-               </div>
-            </div>
+            <!-- Left: Spacer for logo centering -->
+            <div class="flex items-center z-10 w-24"></div>
 
             <!-- Center: Logo -->
             <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center w-full pointer-events-none">
