@@ -34,9 +34,14 @@ class CheckoutController extends Controller
         $total = $subtotal + $delivery;
 
         // Create PaymentIntent
-        $stripeSecret = config('services.stripe.secret');
+        $stripeSecret = config('services.stripe.secret') ?? env('STRIPE_SECRET');
+
         if (!$stripeSecret) {
-            return redirect()->route('cart.index')->with('error', 'Stripe payment is not configured. Please contact support.');
+            \Log::error('Stripe Secret Missing in Checkout', [
+                'config_val' => config('services.stripe.secret'),
+                'env_val' => env('STRIPE_SECRET')
+            ]);
+            return redirect()->route('cart.index')->with('error', 'Stripe payment is not configured on the server. Please check environment variables.');
         }
 
         \Stripe\Stripe::setApiKey($stripeSecret);
