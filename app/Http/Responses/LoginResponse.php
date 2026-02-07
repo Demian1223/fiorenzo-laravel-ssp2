@@ -16,6 +16,7 @@ class LoginResponse implements LoginResponseContract
     public function toResponse($request)
     {
         $role = Auth::user()->role;
+        \Illuminate\Support\Facades\Log::info('LoginResponse: User ' . Auth::user()->email . ' has role: ' . $role);
 
         if ($role === 'admin') {
             return redirect()->intended(route('admin.dashboard'));
