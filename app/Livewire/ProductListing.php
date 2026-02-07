@@ -48,35 +48,40 @@ class ProductListing extends Component
 
         // Gender Filter
         if ($this->gender) {
-            $query->where('gender', $this->gender);
+            $query->where(function ($q) {
+                $q->where('gender', $this->gender)
+                    ->orWhere('gender', 'Unisex');
+            });
         }
 
         // Category Filter
         if ($this->categorySlug) {
-            if ($this->gender) {
-                // If gender is set (e.g. 'men' or 'women'), check for string match in 'category' column used for sidebar
-                // But we passed slug from controller, let's map it or check DB structure
-                // In ShopController, for gender views, it used: where('category', $dbCategory)
-                // Let's implement robust logic:
-                $dbCategory = match ($this->categorySlug) {
-                    'ready-to-wear' => 'readytowear',
-                    'bags' => 'bag',
-                    default => $this->categorySlug,
-                };
+            // Normalize slug for comparison (start with exact match)
+            $slug = strtolower($this->categorySlug);
 
-                $query->where(function ($q) use ($dbCategory) {
-                    $q->where('category', $dbCategory)
-                        ->orWhere('category', $this->categorySlug)
-                        ->orWhere('category', 'handbags');
-                });
+            // Map common slugs to potential DB values if different
+            // This is a safety net for inconsistent data
+            $searchTerms = [$slug];
 
-            } else {
-                // Main Shop Index: uses Category model relation
-                $category = Category::where('slug', $this->categorySlug)->first();
-                if ($category) {
-                    $query->where('category_id', $category->id);
-                }
+            if ($slug === 'bags' || $slug === 'bag') {
+                $searchTerms = ['bag', 'bags', 'handbag', 'handbags'];
+            } elseif ($slug === 'ready-to-wear' || $slug === 'readytowear') {
+                $searchTerms = ['ready-to-wear', 'readytowear', 'clothing'];
+            } elseif ($slug === 'shoes' || $slug === 'shoe') {
+                $searchTerms = ['shoe', 'shoes', 'footwear'];
             }
+
+            $query->where(function ($q) use ($searchTerms, $slug) {
+                // Check category string column case-insensitively
+                foreach ($searchTerms as $term) {
+                    $q->orWhere('category', 'LIKE', "%{$term}%");
+                }
+
+                // Also check relation if it exists
+                $q->orWhereHas('category', function ($c) use ($slug) {
+                    $c->where('slug', $slug);
+                });
+            });
         }
 
         // Sorting
@@ -88,10 +93,8 @@ class ProductListing extends Component
             $query->latest();
         }
 
-        $products = $query->paginate(12);
-
         return view('livewire.product-listing', [
-            'products' => $products
+            'products' => $query->paginate(12)
         ]);
     }
 }
