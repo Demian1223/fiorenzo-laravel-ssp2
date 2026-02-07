@@ -66,7 +66,8 @@ class ProductListing extends Component
 
                 $query->where(function ($q) use ($dbCategory) {
                     $q->where('category', $dbCategory)
-                        ->orWhere('category', $this->categorySlug);
+                        ->orWhere('category', $this->categorySlug)
+                        ->orWhere('category', 'handbags');
                 });
 
             } else {

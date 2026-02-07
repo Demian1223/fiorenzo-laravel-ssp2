@@ -35,7 +35,7 @@ class CheckoutController extends Controller
 
         try {
             $paymentIntent = \Stripe\PaymentIntent::create([
-                'amount' => $total * 100, // Amount in cents
+                'amount' => (int) ($total * 100), // Ensure integer for cents
                 'currency' => 'lkr',
                 'automatic_payment_methods' => [
                     'enabled' => true,
@@ -44,14 +44,19 @@ class CheckoutController extends Controller
                     'user_id' => auth()->id(),
                 ],
             ]);
-        } catch (\Stripe\Exception\InvalidRequestException $e) {
-            return redirect()->route('cart.index')->with('error', 'Payment failed: ' . $e->getMessage());
+        } catch (\Stripe\Exception\ApiErrorException $e) {
+            \Log::error('Stripe PI Error: ' . $e->getMessage());
+            return redirect()->route('cart.index')->with('error', 'Stripe error: ' . $e->getMessage());
         } catch (\Exception $e) {
+            \Log::error('General Checkout Error: ' . $e->getMessage());
             return redirect()->route('cart.index')->with('error', 'An error occurred connecting to Stripe.');
         }
 
         // Map for view compatibility
         $cart = $cartItems->mapWithKeys(function ($item) {
+            if (!$item->product) {
+                return [];
+            }
             return [
                 $item->product_id => [
                     'name' => $item->product->name,
@@ -60,7 +65,7 @@ class CheckoutController extends Controller
                     'image_url' => !empty($item->product->image_url) ? (Str::startsWith($item->product->image_url, ['http', 'https']) ? $item->product->image_url : asset($item->product->image_url)) : 'https://placehold.co/100',
                 ]
             ];
-        })->toArray();
+        })->filter()->toArray();
 
         return view('checkout.payment', [
             'clientSecret' => $paymentIntent->client_secret,
@@ -144,7 +149,12 @@ class CheckoutController extends Controller
 
         } catch (\Exception $e) {
             DB::rollBack();
-            return redirect()->route('cart.index')->with('error', 'Error creating order: ' . $e->getMessage());
+            \Log::error('Order Creation Error: ' . $e->getMessage(), [
+                'user_id' => auth()->id(),
+                'payment_intent' => $paymentIntentId,
+                'trace' => $e->getTraceAsString()
+            ]);
+            return redirect()->route('cart.index')->with('error', 'Error creating order: ' . $e->getMessage() . '. Please contact support with PID: ' . $paymentIntentId);
         }
     }
 }
