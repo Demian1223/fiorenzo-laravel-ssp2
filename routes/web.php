@@ -16,6 +16,8 @@ Route::get('/men', [ShopController::class, 'men'])->name('shop.men');
 Route::get('/products/{product:slug}', [ShopController::class, 'show'])->name('products.show');
 Route::get('/check-stripe', function () {
     return [
+        'app_env' => env('APP_ENV'),
+        'railway_env' => env('RAILWAY_ENVIRONMENT'),
         'config_set' => filled(config('services.stripe.secret')),
         'env_set' => filled(env('STRIPE_SECRET')),
         'config_prefix' => substr(config('services.stripe.secret'), 0, 7),
