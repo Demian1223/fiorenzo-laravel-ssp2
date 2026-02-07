@@ -15,13 +15,6 @@ Route::get('/men', [ShopController::class, 'men'])->name('shop.men');
 
 Route::get('/products/{product:slug}', [ShopController::class, 'show'])->name('products.show');
 Route::get('/checkout-debug', [App\Http\Controllers\CheckoutController::class, 'create'])->name('checkout.debug');
-Route::get('/debug-products', function () {
-    return [
-        'unique_categories' => \App\Models\Product::distinct()->pluck('category'),
-        'total_products' => \App\Models\Product::count(),
-        'sample_products' => \App\Models\Product::take(5)->get(['id', 'name', 'category', 'price']),
-    ];
-});
 
 // Cart & Orders
 use App\Http\Controllers\CartController;

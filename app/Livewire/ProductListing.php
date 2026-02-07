@@ -11,6 +11,11 @@ class ProductListing extends Component
 {
     use WithPagination;
 
+    public function paginationView()
+    {
+        return 'livewire::tailwind'; // or 'vendor.livewire.tailwind'
+    }
+
     public $gender = null;
     public $categorySlug = null;
     public $sort = ''; // 'price_asc', 'price_desc'

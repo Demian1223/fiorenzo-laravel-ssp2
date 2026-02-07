@@ -18,7 +18,8 @@
                 <!-- Cart Items List (Left) -->
                 <div class="flex-1 space-y-8">
                     @foreach($cartItems as $item)
-                        <div class="flex gap-6 pb-8 border-b border-gray-100 last:border-0 relative group">
+                        <div class="flex gap-6 pb-8 border-b border-gray-100 last:border-0 relative group"
+                            wire:key="cart-item-{{ $item->id }}">
 
                             <!-- Image -->
                             <div class="w-24 sm:w-32 aspect-[3/4] bg-gray-50 flex-shrink-0 overflow-hidden">
