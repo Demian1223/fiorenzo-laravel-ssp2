@@ -1,6 +1,7 @@
 <x-app-layout>
     <!-- Hero Section -->
-    <div class="relative h-[60vh] md:h-[70vh] w-full overflow-hidden">
+    <!-- Hero Section -->
+    <div class="relative h-screen w-full overflow-hidden">
         <img src="{{ asset('images/OTHER/services.jpg') }}" class="absolute top-0 left-0 w-full h-full object-cover">
         <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
             <h1
