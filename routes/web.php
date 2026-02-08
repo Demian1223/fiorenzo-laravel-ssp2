@@ -25,7 +25,7 @@ Route::get('/about', function () {
 })->name('about');
 
 Route::get('/services', function () {
-    return view('static.generic', ['title' => 'Client Services']);
+    return view('services');
 })->name('services');
 
 Route::get('/ethics', function () {
