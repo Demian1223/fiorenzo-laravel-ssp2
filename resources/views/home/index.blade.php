@@ -9,12 +9,12 @@
                         {
                             video: '{{ asset('videos/hero_female.mp4') }}',
                             cta: 'DISCOVER THE WOMEN',
-                            link: '{{ route('shop.index', ['category' => 'women']) }}'
+                            link: '{{ route('shop.women') }}'
                         },
                         {
                             video: '{{ asset('videos/hero_male.mp4') }}',
                             cta: 'DISCOVER THE MEN',
-                            link: '{{ route('shop.index', ['category' => 'men']) }}'
+                            link: '{{ route('shop.men') }}'
                         }
                     ],
                     init() {
@@ -99,13 +99,15 @@
 
                             <div class="text-center">
                                 <p class="text-[11px] tracking-[0.3em] text-gray-400 uppercase mb-2">
-                                    {{ $product->brand->name ?? 'FIORENZO' }}</p>
+                                    {{ $product->brand->name ?? 'FIORENZO' }}
+                                </p>
                                 <h3 class="text-[16px] font-light tracking-wide group-hover:italic transition-all duration-300"
                                     style="font-family: 'Cormorant Garamond', serif;">
                                     <a href="{{ route('products.show', $product->slug) }}">{{ $product->name }}</a>
                                 </h3>
                                 <p class="text-[13px] tracking-widest text-[#8b0000] mt-2 italic font-medium">LKR
-                                    {{ number_format($product->price, 0) }}</p>
+                                    {{ number_format($product->price, 0) }}
+                                </p>
                             </div>
                         </div>
                     @endforeach
@@ -205,7 +207,7 @@
                         style="font-family: 'Cormorant Garamond', serif;">
                         Women's Collection
                     </h3>
-                    <a href="{{ route('shop.index', ['category' => 'women']) }}"
+                    <a href="{{ route('shop.women') }}"
                         class="px-8 py-3 border border-white text-[10px] tracking-[0.3em] hover:bg-white hover:text-black transition-all duration-300 uppercase">
                         EXPLORE
                     </a>
@@ -222,7 +224,7 @@
                         style="font-family: 'Cormorant Garamond', serif;">
                         Men's Collection
                     </h3>
-                    <a href="{{ route('shop.index', ['category' => 'men']) }}"
+                    <a href="{{ route('shop.men') }}"
                         class="px-8 py-3 border border-white text-[10px] tracking-[0.3em] hover:bg-white hover:text-black transition-all duration-300 uppercase">
                         EXPLORE
                     </a>
