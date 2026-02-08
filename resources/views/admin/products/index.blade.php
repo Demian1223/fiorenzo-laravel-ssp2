@@ -46,7 +46,7 @@
                                         class="group hover:bg-stone-50 transition-colors border-b border-stone-100 last:border-0">
                                         <td class="py-4">
                                             <div class="h-16 w-16 bg-gray-100 overflow-hidden border border-gray-200">
-                                                <img src="{{ \Illuminate\Support\Str::startsWith($product->image_url, 'http') ? $product->image_url : asset($product->image_url) }}"
+                                                <img src="{{ \Illuminate\Support\Str::startsWith($product->image_url ?? '', 'http') ? $product->image_url : asset($product->image_url) }}"
                                                     alt="{{ $product->name }}" class="h-full w-full object-cover">
                                             </div>
                                         </td>
