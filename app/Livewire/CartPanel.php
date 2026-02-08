@@ -23,7 +23,8 @@ class CartPanel extends Component
         if (Auth::check()) {
             $this->cartItems = CartItem::where('user_id', Auth::id())
                 ->with('product')
-                ->get();
+                ->get()
+                ->filter(fn($item) => $item->product !== null);
 
             $this->calculateTotals();
         }
