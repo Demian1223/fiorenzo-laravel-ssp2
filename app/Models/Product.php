@@ -48,4 +48,13 @@ class Product extends Model
     {
         return $this->hasMany(OrderItem::class);
     }
+
+    public function getCategoryNameAttribute()
+    {
+        // Resolve collision between 'category' column and relationship
+        if ($this->relationLoaded('category')) {
+            return $this->getRelation('category')?->name;
+        }
+        return $this->category()->first()?->name ?? $this->getAttribute('category');
+    }
 }

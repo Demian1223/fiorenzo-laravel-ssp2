@@ -53,7 +53,7 @@
                                         <td class="py-4 font-medium text-lg font-['Cormorant_Garamond'] text-gray-800">
                                             {{ $product->name }}
                                         </td>
-                                        <td class="py-4 text-gray-600">{{ $product->category?->name ?? 'N/A' }}</td>
+                                        <td class="py-4 text-gray-600">{{ $product->category_name ?? 'N/A' }}</td>
 
                                         <td class="py-4 text-right font-medium text-gray-800">
                                             £{{ number_format((float) $product->price, 2) }}</td>
