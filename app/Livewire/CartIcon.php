@@ -20,7 +20,7 @@ class CartIcon extends Component
     public function updateCount()
     {
         if (Auth::check()) {
-            $this->count = CartItem::where('user_id', Auth::id())->sum('quantity');
+            $this->count = CartItem::where('user_id', Auth::id())->whereHas('product')->sum('quantity');
         } else {
             $this->count = 0; // Or session if we supported guest
         }

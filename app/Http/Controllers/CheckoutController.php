@@ -12,7 +12,10 @@ class CheckoutController extends Controller
 {
     public function create()
     {
-        $cartItems = \App\Models\CartItem::where('user_id', auth()->id())->with('product')->get();
+        $cartItems = \App\Models\CartItem::where('user_id', auth()->id())
+            ->with('product')
+            ->get()
+            ->filter(fn($item) => $item->product !== null);
 
         if ($cartItems->isEmpty()) {
             return redirect()->route('cart.index')->with('error', 'Your cart is empty.');
