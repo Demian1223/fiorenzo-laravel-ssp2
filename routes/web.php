@@ -21,7 +21,7 @@ use App\Http\Controllers\CartController;
 
 // Static Pages
 Route::get('/about', function () {
-    return view('static.generic', ['title' => 'About Fiorenzo']);
+    return view('about');
 })->name('about');
 
 Route::get('/services', function () {
