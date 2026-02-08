@@ -1,13 +1,13 @@
 <x-app-layout>
     <!-- Hero Section with Video -->
-    <div class="relative h-[80vh] w-full overflow-hidden">
+    <div class="relative h-screen w-full overflow-hidden">
         <video autoplay loop muted playsinline class="absolute top-0 left-0 w-full h-full object-cover">
             <source src="{{ asset('videos/OurStory.mp4') }}" type="video/mp4">
             Your browser does not support the video tag.
         </video>
-        <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
+        <div class="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center">
             <h1
-                class="text-white text-display font-['Cormorant_Garamond'] text-6xl md:text-8xl tracking-wider text-center uppercase drop-shadow-lg">
+                class="text-white text-display font-['Cormorant_Garamond'] text-6xl md:text-8xl tracking-wider text-center uppercase drop-shadow-2xl">
                 Our Story
             </h1>
         </div>
@@ -20,7 +20,7 @@
             <!-- Intro -->
             <div class="space-y-6 animate-fade-in-up">
                 <p class="font-['Cormorant_Garamond'] text-2xl md:text-3xl text-gray-800 leading-relaxed italic">
-                    "Luxury fashion has always been admired — but not always accessible."
+                    "Luxury fashion has always been admired but not always accessible."
                 </p>
                 <div class="w-24 h-px bg-[#8b0000] mx-auto"></div>
                 <p class="font-sans text-gray-600 text-lg leading-loose tracking-wide">
