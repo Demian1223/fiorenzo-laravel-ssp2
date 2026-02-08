@@ -64,7 +64,14 @@ class AdminProductController extends Controller
 
         // Set default gender if needed (migration made it nullable, so safe)
 
-        Product::create($validated);
+        try {
+            Product::create($validated);
+        } catch (\Illuminate\Database\QueryException $e) {
+            if ($e->errorInfo[1] == 1062) {
+                return back()->withInput()->withErrors(['slug' => 'The generated slug for this product name already exists. Please user a different name.']);
+            }
+            return back()->withInput()->withErrors(['error' => 'An error occurred while creating the product: ' . $e->getMessage()]);
+        }
 
         return redirect()->route('admin.products.index')->with('success', 'Product created successfully.');
     }
@@ -109,7 +116,15 @@ class AdminProductController extends Controller
             $validated['category'] = $category->slug;
         }
 
-        $product->update($validated);
+        try {
+            $product->update($validated);
+        } catch (\Illuminate\Database\QueryException $e) {
+            // Check for duplicate entry error (1062)
+            if ($e->errorInfo[1] == 1062) {
+                return back()->withInput()->withErrors(['slug' => 'The generated slug for this product name already exists. Please user a different name.']);
+            }
+            return back()->withInput()->withErrors(['error' => 'An error occurred while updating the product: ' . $e->getMessage()]);
+        }
 
         return redirect()->route('admin.products.index')->with('success', 'Product updated successfully.');
     }
