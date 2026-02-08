@@ -60,6 +60,14 @@ class AdminProductController extends Controller
         $category = Category::find($validated['category_id']);
         if ($category) {
             $validated['category'] = $category->slug; // or name, using slug for consistency
+
+            // Auto-assign Gender
+            $catName = strtolower($category->name);
+            if ($catName === 'men' || (str_contains($catName, 'men') && !str_contains($catName, 'women'))) {
+                $validated['gender'] = 'men';
+            } elseif ($catName === 'women' || str_contains($catName, 'women')) {
+                $validated['gender'] = 'women';
+            }
         }
 
         // Set default gender if needed (migration made it nullable, so safe)
@@ -114,6 +122,28 @@ class AdminProductController extends Controller
         $category = Category::find($validated['category_id']);
         if ($category) {
             $validated['category'] = $category->slug;
+
+            // Auto-assign Gender based on Category Name/Slug
+            // This is a heuristic. Ideally we should have a Gender dropdown or Category should have a gender_id.
+            $catName = strtolower($category->name);
+            $catSlug = strtolower($category->slug);
+
+            if (str_contains($catName, 'men') && !str_contains($catName, 'women')) {
+                $validated['gender'] = 'men';
+            } elseif (str_contains($catName, 'women') || str_contains($catName, 'ladies')) {
+                $validated['gender'] = 'women';
+            } else {
+                // Default fallback or leave nullable if unknown
+                // Maybe check if it's 'bags' -> usually women's in this shop context?
+                // For now, let's default to 'women' if ambiguous as per shop focus, or maybe 'unisex'?
+                // Actually, let's look at existing data.
+                // If the user selected 'Men', the category name is 'Men'.
+                if ($catName === 'men') {
+                    $validated['gender'] = 'men';
+                } elseif ($catName === 'women') {
+                    $validated['gender'] = 'women';
+                }
+            }
         }
 
         try {
