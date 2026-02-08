@@ -115,7 +115,10 @@ class CheckoutController extends Controller
         try {
             DB::beginTransaction();
 
-            $cartItems = \App\Models\CartItem::where('user_id', auth()->id())->with('product')->get();
+            $cartItems = \App\Models\CartItem::where('user_id', auth()->id())
+                ->with('product')
+                ->get()
+                ->filter(fn($item) => $item->product !== null); // Fix: Filter out items with missing products
 
             if ($cartItems->isEmpty()) {
                 return redirect()->route('orders.index')->with('error', 'Session expired or cart empty. Please contact support with Payment ID: ' . $paymentIntentId);
