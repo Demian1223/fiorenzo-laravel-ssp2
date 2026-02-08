@@ -2,10 +2,7 @@
     <div x-data="{ 
             activeImageIndex: 0,
             images: [
-                '{{ Str::startsWith($product->image_url, ['http', 'https']) ? $product->image_url : asset($product->image_url) }}',
-                 // Placeholders for gallery 
-                'https://images.unsplash.com/photo-1521369909029-2afed882baee?auto=format&fit=crop&q=80&w=1000',
-                'https://images.unsplash.com/photo-1575428652377-a2d80e2277fc?auto=format&fit=crop&q=80&w=1000'
+                '{{ Str::startsWith($product->image_url, ['http', 'https']) ? $product->image_url : asset($product->image_url) }}'
             ],
             loaded: false,
             nextImage() {
@@ -35,7 +32,7 @@
                     </template>
 
                     <!-- Navigation Arrows -->
-                    <div
+                    <div x-show="images.length > 1"
                         class="absolute inset-x-0 flex justify-between px-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
                         <button @click="prevImage()"
                             class="bg-white/90 p-3 rounded-full hover:bg-white shadow-sm pointer-events-auto transform hover:scale-105 transition-all">
@@ -55,7 +52,7 @@
 
 
                     <!-- Dots -->
-                    <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex space-x-3">
+                    <div x-show="images.length > 1" class="absolute bottom-6 left-1/2 -translate-x-1/2 flex space-x-3">
                         <template x-for="(image, index) in images" :key="index">
                             <button @click="activeImageIndex = index"
                                 class="transition-all duration-300 rounded-full border border-black/30"
