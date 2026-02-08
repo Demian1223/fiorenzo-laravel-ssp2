@@ -29,7 +29,7 @@ Route::get('/services', function () {
 })->name('services');
 
 Route::get('/ethics', function () {
-    return view('static.generic', ['title' => 'Our Ethics']);
+    return view('ethics');
 })->name('ethics');
 
 Route::get('/faq', function () {
