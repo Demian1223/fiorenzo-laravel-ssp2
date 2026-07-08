@@ -1,36 +1,30 @@
-Fiorenzo — Luxury Fashion E-Commerce Backend (Laravel)
+# Fiorenzo - Luxury Fashion E-Commerce Backend (Laravel)
 
 Backend API and admin server for the Fiorenzo luxury fashion e-commerce platform, built with Laravel. Handles product catalog, user accounts, cart/checkout logic, and secure API access for the companion Flutter mobile app.
 
-Core Features
+## Core Features
+- Relational database design in MySQL — product catalog, account profiles, and categorization schemas
+- RESTful API endpoints serving JSON payloads to the Flutter mobile app, tested with Postman
+- Token-based authentication using Laravel Sanctum, with Jetstream and Fortify for account security flows
+- Activity Diagram–modeled system logic for automated delivery date calculations, verification flags, and cart reset behavior
+- Security hardening: manually tested against SQL Injection and Cross-Site Scripting (XSS) vulnerabilities
 
+## Tech Stack
+- **Framework:** Laravel (PHP)
+- **Auth:** Laravel Sanctum, Jetstream, Fortify
+- **Database:** MySQL
+- **Frontend (admin/web views):** Blade, Tailwind CSS
+- **API testing:** Postman
 
-Relational database design in MySQL — product catalog, account profiles, and categorization schemas
-RESTful API endpoints serving JSON payloads to the Flutter mobile app, tested with Postman
-Token-based authentication using Laravel Sanctum, with Jetstream and Fortify for account security flows
-Activity Diagram–modeled system logic for automated delivery date calculations, verification flags, and cart reset behavior
-Security hardening: manually tested against SQL Injection and Cross-Site Scripting (XSS) vulnerabilities
+## Related Project
+Paired with the [Fiorenzo Flutter mobile app](https://github.com/Demian1223/fiorenzo_flutter-MAD2), which consumes this API.
 
+## Running Locally
 
-Tech Stack
+**Prerequisites:** PHP, Composer, MySQL, Node.js
 
-
-Framework: Laravel (PHP)
-Auth: Laravel Sanctum, Jetstream, Fortify
-Database: MySQL
-Frontend (admin/web views): Blade, Tailwind CSS
-API testing: Postman
-
-
-Related Project
-
-Paired with the Fiorenzo Flutter mobile app, which consumes this API.
-
-Running Locally
-
-Prerequisites: PHP, Composer, MySQL, Node.js
-
-bashgit clone https://github.com/Demian1223/fiorenzo-laravel-ssp2.git
+```bash
+git clone https://github.com/Demian1223/fiorenzo-laravel-ssp2.git
 cd fiorenzo-laravel-ssp2
 composer install
 npm install
@@ -39,66 +33,7 @@ php artisan key:generate
 php artisan migrate
 npm run build
 php artisan serve
+```
 
-
-Built as an individual coursework project (Server-Side Programming module).
-
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
-
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
-
-## About Laravel
-
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
-
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
-
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
-
-## Learning Laravel
-
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
-
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+---
+*Built as an individual coursework project (Server-Side Programming module).*
